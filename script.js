@@ -226,7 +226,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  /* ── ✦ 6. GALLERY SLIDER ────────────────────────────────── */
+  /* ── ✦ 6. GALLERY SLIDER (LOOP w/o empty space) ─────────── */
   (() => {
     const slider   = document.getElementById('gallerySlider');
     const prevBtn  = document.getElementById('galleryPrev');
@@ -234,60 +234,179 @@ document.addEventListener('DOMContentLoaded', () => {
     const dotsWrap = document.getElementById('galleryDots');
     if (!slider) return;
 
-    const slides    = slider.querySelectorAll('.gallery-slide');
-    const total     = slides.length;
-    let   current   = 0;
-    let   autoTimer = null;
+    // Original slides (real content)
+    const originalSlides = Array.from(slider.querySelectorAll('.gallery-slide'));
+    const total = originalSlides.length;
+    if (total < 2) return;
 
+    let current = 0; // 0..total-1 (real index)
+    let autoTimer = null;
+
+    // Build dots (based on real slides)
     const dots = [];
-    slides.forEach((_, i) => {
+    dotsWrap.innerHTML = '';
+    originalSlides.forEach((_, i) => {
       const dot = document.createElement('button');
-      dot.className   = 'gallery-dot' + (i === 0 ? ' active' : '');
+      dot.className = 'gallery-dot' + (i === 0 ? ' active' : '');
       dot.setAttribute('aria-label', `Go to slide ${i + 1}`);
       dot.addEventListener('click', () => goTo(i));
       dotsWrap.appendChild(dot);
       dots.push(dot);
     });
 
-    function goTo(idx) {
-      current = Math.max(0, Math.min(idx, total - 1));
-      const slideWidth = slides[0].offsetWidth + 24; 
-      slider.style.transform = `translateX(-${current * slideWidth}px)`;
-      slider.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+    // Clone slides to create infinite-loop illusion
+    // We'll have: [tail clones][head clones]
+    // Start in the middle group.
+    function decideCloneTimes() {
+      const w = window.innerWidth;
+      // show count-ish => helps avoid visible gaps on fast swipe/resize
+      if (w >= 1024) return 3;
+      if (w >= 600) return 2;
+      return 1;
+    }
 
+    let cloneCount = decideCloneTimes();
+
+    // Clear slider and re-render clones + originals
+    const slideHTML = originalSlides.map(s => s.outerHTML);
+    slider.innerHTML = '';
+
+    // We create three groups: [tail][original][head]
+    // tail/head are derived from original slides.
+    function addGroup(fromIdx, count) {
+      for (let i = 0; i < count; i++) {
+        const idx = (fromIdx + i) % total;
+        const tmp = document.createElement('div');
+        tmp.innerHTML = slideHTML[idx];
+        slider.appendChild(tmp.firstElementChild);
+      }
+    }
+
+    // After cloning, total rendered slides = total * 3
+    addGroup(total - (total * cloneCount % total), total); // tail
+    addGroup(0, total); // middle
+    addGroup(0, total); // head
+
+    const renderedSlides = Array.from(slider.querySelectorAll('.gallery-slide'));
+
+    function getSlideMetrics() {
+      const first = renderedSlides[0];
+      const slideWidth = first.getBoundingClientRect().width;
+      // gap in your CSS is 1.5rem = 24px (gallery-slider gap: 1.5rem)
+      const gap = 24;
+      return { slideWidth: slideWidth + gap };
+    }
+
+    // internal position index within rendered slides
+    // middle group starts at index = total
+    let internalIndex = total; // corresponds to current real index 0
+
+    function applyTransform({ animate }) {
+      const { slideWidth } = getSlideMetrics();
+      if (animate) {
+        slider.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
+      } else {
+        slider.style.transition = 'none';
+      }
+      slider.style.transform = `translateX(-${internalIndex * slideWidth}px)`;
+    }
+
+    function syncDots() {
       dots.forEach((d, i) => d.classList.toggle('active', i === current));
     }
 
-    slider.style.display    = 'flex';
-    slider.style.overflow   = 'visible';
-    slider.style.transform  = 'translateX(0)';
+    function goTo(idx) {
+      // idx is real index
+      const nextReal = ((idx % total) + total) % total;
+      const diff = nextReal - current;
+
+      // Move by exactly 1 step in the direction to keep animation consistent
+      // (buttons/dots already pass single-step or direct index)
+      // For direct index jumps, just update real index and set internal index accordingly.
+      current = nextReal;
+      internalIndex = total + current;
+      applyTransform({ animate: true });
+      syncDots();
+
+      // safety: after transition, ensure we stay in middle group range
+      // (jump back to middle if we somehow drifted)
+      window.setTimeout(() => {
+        // constrain internal index back to middle group equivalent
+        // if internal index lands in tail/head, normalize it.
+        if (internalIndex < total) internalIndex += total;
+        if (internalIndex >= total * 2) internalIndex -= total;
+        applyTransform({ animate: false });
+      }, 520);
+    }
+
+    slider.style.display = 'flex';
+    slider.style.overflow = 'visible';
     slider.parentElement.style.overflow = 'hidden';
 
+    function step(dir) {
+      // dir: +1 next, -1 prev
+      internalIndex += dir;
+      current = (current + dir + total) % total;
+      applyTransform({ animate: true });
+      syncDots();
+
+      // If we cross into clone group boundaries, instantly normalize position
+      // so there is never a 'blank end'.
+      window.setTimeout(() => {
+        // tail group range: [0 .. total-1]
+        // middle group: [total .. 2*total-1]
+        // head group: [2*total .. 3*total-1]
+        if (internalIndex < total) {
+          internalIndex += total;
+          applyTransform({ animate: false });
+        } else if (internalIndex >= total * 2) {
+          internalIndex -= total;
+          applyTransform({ animate: false });
+        }
+      }, 520);
+    }
+
     prevBtn.addEventListener('click', () => {
-      goTo(current > 0 ? current - 1 : total - 1);
+      step(-1);
       resetAuto();
     });
     nextBtn.addEventListener('click', () => {
-      goTo(current < total - 1 ? current + 1 : 0);
+      step(+1);
       resetAuto();
     });
 
+    // Touch / swipe
     let touchStartX = 0;
-    slider.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
-    slider.addEventListener('touchend',   e => {
+    slider.addEventListener('touchstart', e => {
+      touchStartX = e.changedTouches[0].clientX;
+    }, { passive: true });
+
+    slider.addEventListener('touchend', e => {
       const dx = e.changedTouches[0].clientX - touchStartX;
       if (Math.abs(dx) > 40) {
-        dx < 0 ? goTo(current + 1) : goTo(current - 1);
+        dx < 0 ? step(+1) : step(-1);
         resetAuto();
       }
     });
 
-    function startAuto() { autoTimer = setInterval(() => goTo((current + 1) % total), 4000); }
-    function resetAuto()  { clearInterval(autoTimer); startAuto(); }
+    function startAuto() {
+      autoTimer = setInterval(() => step(+1), 4000);
+    }
+    function resetAuto() {
+      clearInterval(autoTimer);
+      startAuto();
+    }
+
+    // Init
+    internalIndex = total + current;
+    applyTransform({ animate: false });
+    syncDots();
     startAuto();
 
-    window.addEventListener('resize', () => goTo(current));
-    goTo(0);
+    window.addEventListener('resize', () => {
+      // Recompute transform with same internal index
+      applyTransform({ animate: false });
+    });
   })();
 
   /* ── ✦ 7. ENVELOPE / LETTER ─────────────────────────────── */
