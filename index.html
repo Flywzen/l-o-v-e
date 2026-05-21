@@ -1,139 +1,361 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Happy Birthday Sayang! 🎉</title>
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #ffeef2;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            padding: 20px;
-            color: #4a4a4a;
-        }
-        .container {
-            background: white;
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.5);
-            text-align: center;
-            max-width: 450px;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 5px solid #ffb6c1;
-            margin-bottom: 20px;
-        }
-        h1 {
-            font-size: 1.8rem;
-            color: #ff5e7e;
-            margin-bottom: 10px;
-        }
-        p {
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        /* Style buat video biar responsif di HP */
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-        .btn {
-            background-color: #ff5e7e;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 1rem;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(255, 94, 126, 0.3);
-            transition: 0.2s;
-            width: 100%;
-        }
-        .btn:hover {
-            transform: scale(1.02);
-            background-color: #ff4166;
-        }
-        .surat-rahasia {
-            display: none;
-            margin-top: 20px;
-            padding: 15px;
-            background: #fff0f3;
-            border-left: 5px solid #ff5e7e;
-            border-radius: 8px;
-            text-align: left;
-            font-style: italic;
-            animation: fadeIn 1s ease-in-out forwards;
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-</head>
-<body>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday, My Love 🎉</title>
 
-    <div class="container">
-        <img class="profile-img" src="foto.jpg" alt="Foto Ayang">
-        
-        <h1>Happy Birthday, [Nama Cewe Lu]! 💖</h1>
-        
-        <p>Hari ini adalah hari yang spesial karena orang paling favorit aku di dunia ini lagi tambah umur. Aku punya video kecil nih buat kamu, ditonton ya! 🎬✨</p>
-        
-        <div class="video-container">
-            <iframe src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
-        </div>
-        
-        <button class="btn" onclick="bukaSurat()">Klik di Sini Dong! 🎁</button>
-        
-        <div id="surat" class="surat-rahasia">
-            "Hai Sayang... Selamat ulang tahun ya! Di umur yang baru ini, aku doain semoga kamu selalu bahagia, sehat, dan semua cita-cita kamu tercapai. Aku beruntung banget bisa punya kamu di hidup aku. Tetep jadi kamu yang apa adanya ya. I love you so much! 💝"
-        </div>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            rose:    { DEFAULT: '#f43f5e', soft: '#fda4af', light: '#ffe4e6', blush: '#fff1f2' },
+            gold:    { DEFAULT: '#c9a96e', light: '#f7e9d3', pale: '#fdf6ec' },
+            cream:   '#fdf8f5',
+            script:  '#b06080',
+          },
+          fontFamily: {
+            script: ['"Great Vibes"', 'cursive'],
+            body:   ['Poppins', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="bg-cream font-body overflow-x-hidden">
+
+  <!-- ░░ FLOATING HEARTS CANVAS ░░ -->
+  <canvas id="heartsCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
+
+  <!-- ░░ NAV ░░ -->
+  <nav class="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 nav-glass">
+    <span class="font-script text-2xl text-script">With Love 💕</span>
+    <ul class="hidden md:flex gap-8 text-sm font-medium text-rose-400">
+      <li><a href="#hero"    class="nav-link">Home</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#video"   class="nav-link">Video</a></li>
+      <li><a href="#letter"  class="nav-link">Letter</a></li>
+      <li><a href="#coupons" class="nav-link">Coupons</a></li>
+    </ul>
+    <button id="mobileMenuBtn" class="md:hidden text-rose-400 text-xl" aria-label="Menu">
+      <i class="fas fa-heart"></i>
+    </button>
+  </nav>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-rose-blush/95 backdrop-blur-md">
+    <button id="mobileMenuClose" class="absolute top-6 right-6 text-rose-400 text-2xl"><i class="fas fa-times"></i></button>
+    <a href="#hero"    class="mobile-nav-link font-script text-4xl text-script">Home</a>
+    <a href="#gallery" class="mobile-nav-link font-script text-4xl text-script">Gallery</a>
+    <a href="#video"   class="mobile-nav-link font-script text-4xl text-script">Video</a>
+    <a href="#letter"  class="mobile-nav-link font-script text-4xl text-script">Letter</a>
+    <a href="#coupons" class="mobile-nav-link font-script text-4xl text-script">Coupons</a>
+  </div>
+
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 1 — HERO
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-24 pb-16 z-10">
+
+    <!-- Decorative blobs -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <!-- Petals ring -->
+    <div class="petal-ring" aria-hidden="true">
+      <span class="petal">🌸</span><span class="petal">🌷</span><span class="petal">🌹</span>
+      <span class="petal">💐</span><span class="petal">🌸</span><span class="petal">🌺</span>
     </div>
 
-    <script>
-        function bukaSurat() {
-            var运行 = document.getElementById("surat");
-            var tombol = document.querySelector(".btn");
-            
-            if (surat.style.display === "none" || surat.style.display === "") {
-                surat.style.display = "block";
-                tombol.innerHTML = "Tutup Surat 💌";
-                alert("Cieee ada surat rahasia nih buat kamu... Dibaca sampai habis ya!");
-            } else {
-                surat.style.display = "none";
-                tombol.innerHTML = "Klik di Sini Dong! 🎁";
-            }
-        }
-    </script>
+    <p class="font-script text-3xl md:text-5xl text-rose-soft mb-2 animate-fadein-up" style="animation-delay:.1s">Today is all about</p>
+
+    <h1 class="font-script text-6xl md:text-8xl lg:text-9xl text-script leading-tight animate-fadein-up" style="animation-delay:.25s">
+      <!-- JS fills this -->
+      <span id="heroName">You 💖</span>
+    </h1>
+
+    <!-- Typewriter -->
+    <div class="mt-6 min-h-[3rem] animate-fadein-up" style="animation-delay:.45s">
+      <p class="text-xl md:text-3xl font-semibold text-rose-400">
+        <span id="typewriter"></span><span class="typewriter-cursor">|</span>
+      </p>
+    </div>
+
+    <!-- Countdown -->
+    <div class="mt-10 animate-fadein-up" style="animation-delay:.65s">
+      <p id="countdownLabel" class="text-sm uppercase tracking-widest text-gold mb-3 font-medium">Days Together 🥂</p>
+      <div class="flex gap-4 justify-center" id="countdownDisplay">
+        <div class="countdown-card"><span id="cdDays" class="countdown-num">000</span><span class="countdown-lbl">Days</span></div>
+        <div class="countdown-card"><span id="cdHours" class="countdown-num">00</span><span class="countdown-lbl">Hours</span></div>
+        <div class="countdown-card"><span id="cdMins" class="countdown-num">00</span><span class="countdown-lbl">Mins</span></div>
+        <div class="countdown-card"><span id="cdSecs" class="countdown-num">00</span><span class="countdown-lbl">Secs</span></div>
+      </div>
+    </div>
+
+    <!-- Scroll indicator -->
+    <a href="#gallery" class="scroll-indicator mt-14 animate-fadein-up" style="animation-delay:.85s" aria-label="Scroll down">
+      <i class="fas fa-chevron-down"></i>
+    </a>
+  </section>
+
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 2 — GALLERY
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <section id="gallery" class="relative z-10 py-24 px-6">
+    <div class="max-w-6xl mx-auto">
+      <div class="section-heading">
+        <p class="section-sub">Our Memories</p>
+        <h2 class="section-title">A Thousand Moments 📸</h2>
+      </div>
+
+      <!-- Slider wrapper -->
+      <div class="gallery-slider-wrapper mt-12">
+        <button class="slider-btn slider-prev" id="galleryPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
+        <div class="gallery-slider" id="gallerySlider">
+
+          <!-- ── Replace src with your actual image paths ── -->
+          <div class="gallery-slide">
+            <div class="gallery-card">
+              <img src="assets/images/photo1.jpg" alt="Memory 1" loading="lazy" />
+              <div class="gallery-overlay"><p class="font-script text-white text-2xl">Always Smiling 🌸</p></div>
+            </div>
+          </div>
+          <div class="gallery-slide">
+            <div class="gallery-card">
+              <img src="assets/images/photo2.jpg" alt="Memory 2" loading="lazy" />
+              <div class="gallery-overlay"><p class="font-script text-white text-2xl">Forever Beautiful 💕</p></div>
+            </div>
+          </div>
+          <div class="gallery-slide">
+            <div class="gallery-card">
+              <img src="assets/images/photo3.jpg" alt="Memory 3" loading="lazy" />
+              <div class="gallery-overlay"><p class="font-script text-white text-2xl">My Favourite View 🌹</p></div>
+            </div>
+          </div>
+          <div class="gallery-slide">
+            <div class="gallery-card">
+              <img src="assets/images/photo4.jpg" alt="Memory 4" loading="lazy" />
+              <div class="gallery-overlay"><p class="font-script text-white text-2xl">Pure Joy ✨</p></div>
+            </div>
+          </div>
+          <div class="gallery-slide">
+            <div class="gallery-card">
+              <img src="assets/images/photo5.jpg" alt="Memory 5" loading="lazy" />
+              <div class="gallery-overlay"><p class="font-script text-white text-2xl">You & Me 💖</p></div>
+            </div>
+          </div>
+
+        </div>
+        <button class="slider-btn slider-next" id="galleryNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
+      </div>
+
+      <!-- Dots -->
+      <div class="flex justify-center gap-2 mt-6" id="galleryDots"></div>
+    </div>
+  </section>
+
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 3 — VIDEO
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <section id="video" class="relative z-10 py-24 px-6 bg-rose-light/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="section-heading">
+        <p class="section-sub">A Message For You</p>
+        <h2 class="section-title">Watch This 🎬</h2>
+      </div>
+
+      <div class="video-container mt-12">
+        <!-- Replace VIDEO_ID with your unlisted YouTube video ID -->
+        <iframe
+          src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1&color=white"
+          title="Birthday video"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 4 — LETTER / ENVELOPE
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <section id="letter" class="relative z-10 py-24 px-6">
+    <div class="max-w-3xl mx-auto">
+      <div class="section-heading">
+        <p class="section-sub">From My Heart</p>
+        <h2 class="section-title">A Little Letter 💌</h2>
+      </div>
+
+      <div class="mt-12 flex flex-col items-center">
+
+        <!-- Envelope -->
+        <div class="envelope-wrapper" id="envelopeWrapper" role="button" tabindex="0" aria-label="Open envelope to read letter">
+          <div class="envelope" id="envelope">
+            <div class="envelope-back"></div>
+            <div class="envelope-flap" id="envelopeFlap"></div>
+            <div class="envelope-front">
+              <div class="envelope-seal" id="envelopeSeal">
+                <i class="fas fa-heart text-white text-xl"></i>
+              </div>
+            </div>
+          </div>
+          <p class="mt-6 text-rose-400 text-sm font-medium tracking-widest uppercase animate-pulse">
+            Click to open 💕
+          </p>
+        </div>
+
+        <!-- Letter reveal -->
+        <div class="letter-reveal" id="letterReveal">
+          <div class="letter-paper" id="letterPaper">
+            <div class="letter-decoration-top">✦ ✦ ✦</div>
+            <p class="font-script text-5xl text-script mb-6">My Dearest,</p>
+
+            <div class="letter-body">
+              <p>
+                Words will never be enough to describe how grateful I am to have you in my life. Every single day with you feels like a gentle reminder that something beautiful is real — that warmth, laughter, and unconditional love are not just ideas from a fairytale.
+              </p>
+              <p>
+                On this very special day, I want you to know that you are the most wonderful, kind-hearted, and breathtakingly beautiful person I have ever known. Your smile could light up an entire city. Your laugh is my favourite sound in the whole world.
+              </p>
+              <p>
+                Thank you for being patient with me, for choosing me every single day, for believing in us even on the days when things weren't easy. You make me want to be a better person — and that is the greatest gift anyone has ever given me.
+              </p>
+              <p>
+                So today, on your birthday, I celebrate YOU. Every dream you carry, every laugh you share, every moment of brilliance and beauty that is entirely, undeniably you.
+              </p>
+              <p>
+                Happy Birthday, my love. May this year bring you everything you deserve — which is nothing less than the entire world. 🌍💕
+              </p>
+            </div>
+
+            <div class="text-right mt-8">
+              <p class="font-script text-4xl text-script">Forever Yours,</p>
+              <!-- ── Replace with your name ── -->
+              <p class="font-script text-3xl text-rose-soft mt-1">Your Love 💖</p>
+            </div>
+
+            <div class="letter-decoration-bottom">✦ ✦ ✦</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 5 — COUPONS
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <section id="coupons" class="relative z-10 py-24 px-6 bg-gold-pale">
+    <div class="max-w-5xl mx-auto">
+      <div class="section-heading">
+        <p class="section-sub">Redeemable Anytime</p>
+        <h2 class="section-title">Your Gift Vouchers 🎁</h2>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12" id="couponsGrid">
+
+        <div class="coupon-card" data-emoji="🍦" data-label="Free Ice Cream">
+          <div class="coupon-badge">VOUCHER</div>
+          <div class="coupon-icon">🍦</div>
+          <h3 class="coupon-title">Free Ice Cream</h3>
+          <p class="coupon-desc">One scoop of your favourite flavour, anytime you want it!</p>
+          <button class="coupon-btn">Redeem 🎉</button>
+          <div class="coupon-holes"><span></span><span></span></div>
+        </div>
+
+        <div class="coupon-card" data-emoji="🤗" data-label="Unlimited Hugs">
+          <div class="coupon-badge">VOUCHER</div>
+          <div class="coupon-icon">🤗</div>
+          <h3 class="coupon-title">Unlimited Hugs</h3>
+          <p class="coupon-desc">Valid for as many hugs as you need, no expiry date.</p>
+          <button class="coupon-btn">Redeem 🎉</button>
+          <div class="coupon-holes"><span></span><span></span></div>
+        </div>
+
+        <div class="coupon-card" data-emoji="🎬" data-label="Movie Night">
+          <div class="coupon-badge">VOUCHER</div>
+          <div class="coupon-icon">🎬</div>
+          <h3 class="coupon-title">Movie Night</h3>
+          <p class="coupon-desc">Your choice of movie, popcorn, and blankets included.</p>
+          <button class="coupon-btn">Redeem 🎉</button>
+          <div class="coupon-holes"><span></span><span></span></div>
+        </div>
+
+        <div class="coupon-card" data-emoji="🍽️" data-label="Fancy Dinner">
+          <div class="coupon-badge">VOUCHER</div>
+          <div class="coupon-icon">🍽️</div>
+          <h3 class="coupon-title">Fancy Dinner</h3>
+          <p class="coupon-desc">A romantic dinner at a restaurant of your choosing.</p>
+          <button class="coupon-btn">Redeem 🎉</button>
+          <div class="coupon-holes"><span></span><span></span></div>
+        </div>
+
+        <div class="coupon-card" data-emoji="💆" data-label="Spa Day">
+          <div class="coupon-badge">VOUCHER</div>
+          <div class="coupon-icon">💆</div>
+          <h3 class="coupon-title">Spa Day</h3>
+          <p class="coupon-desc">A full relaxation day just for you — you deserve it!</p>
+          <button class="coupon-btn">Redeem 🎉</button>
+          <div class="coupon-holes"><span></span><span></span></div>
+        </div>
+
+        <div class="coupon-card" data-emoji="🌅" data-label="Surprise Date">
+          <div class="coupon-badge">VOUCHER</div>
+          <div class="coupon-icon">🌅</div>
+          <h3 class="coupon-title">Surprise Date</h3>
+          <p class="coupon-desc">I plan everything — just show up and enjoy the magic.</p>
+          <button class="coupon-btn">Redeem 🎉</button>
+          <div class="coupon-holes"><span></span><span></span></div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="relative z-10 py-12 text-center bg-rose-light/20">
+    <p class="font-script text-4xl text-script mb-2">Made with Love 💕</p>
+    <p class="text-sm text-rose-300 font-medium tracking-widest uppercase">Happy Birthday · Always &amp; Forever</p>
+    <div class="mt-4 flex justify-center gap-4 text-rose-300 text-lg">
+      <i class="fas fa-heart animate-heartbeat"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-heart animate-heartbeat" style="animation-delay:.3s"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-heart animate-heartbeat" style="animation-delay:.6s"></i>
+    </div>
+  </footer>
+
+  <!-- Coupon redeemed modal -->
+  <div id="couponModal" class="coupon-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="coupon-modal-box">
+      <div id="modalEmoji" class="text-6xl mb-4"></div>
+      <h3 id="modalTitle" class="font-script text-4xl text-script mb-2"></h3>
+      <p class="text-rose-400 font-medium mb-6">Voucher redeemed! 🎊<br/>Present this to claim your reward.</p>
+      <button id="modalClose" class="coupon-btn">Close 💖</button>
+    </div>
+  </div>
+
+  <!-- Custom JS -->
+  <script src="script.js"></script>
 </body>
 </html>
