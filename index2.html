@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Advent of Your Light ⚡ Hanna Tamara</title>
+  <title>Happy Birthday ⚡ Demon Slayer</title>
 
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Sawarabi+Mincho&family=IM+Fell+English:ital@1&display=swap" rel="stylesheet" />
 
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -31,12 +33,16 @@
     };
   </script>
 
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
 
+  <!-- Canvas Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
 
+  <!-- Your existing CSS -->
   <link rel="stylesheet" href="style.css" />
 
+  <!-- Extra Demon Slayer flavour on top -->
   <style>
     :root {
       --thunder: #f5c518;
@@ -167,120 +173,134 @@
 </head>
 <body class="font-jp overflow-x-hidden">
 
+  <!-- ⚡ Haori stripe -->
   <div class="haori-stripe fixed top-0 left-0 right-0 z-[60]"></div>
 
+  <!-- ░░ FLOATING HEARTS / SPARKS CANVAS ░░ -->
   <canvas id="heartsCanvas" class="fixed inset-0 pointer-events-none z-0"></canvas>
 
+  <!-- ░░ NAV ░░ -->
   <nav class="fixed top-[4px] left-0 right-0 z-50 flex items-center justify-between px-6 py-4 nav-glass">
-    <span class="font-title text-sm tracking-widest thunder-text">Greetings, My Beloved</span>
+    <span class="font-title text-sm tracking-widest thunder-text">hello, dear
+      !</span>
     <ul class="hidden md:flex gap-8 text-xs font-medium tracking-widest uppercase" style="color:var(--smoke)">
-      <li><a href="#hero"    class="nav-link hover:text-yellow-300 transition-colors">Sanctuary</a></li>
-      <li><a href="#gallery" class="nav-link hover:text-yellow-300 transition-colors">Chronicles</a></li>
-      <li><a href="#video"   class="nav-link hover:text-yellow-300 transition-colors">Vignette</a></li>
-      <li><a href="#letter"  class="nav-link hover:text-yellow-300 transition-colors">Epistle</a></li>
-      <li><a href="#coupons" class="nav-link hover:text-yellow-300 transition-colors">Tokens</a></li>
+      <li><a href="#hero"    class="nav-link hover:text-yellow-300 transition-colors">Home</a></li>
+      <li><a href="#gallery" class="nav-link hover:text-yellow-300 transition-colors">Gallery</a></li>
+      <li><a href="#video"   class="nav-link hover:text-yellow-300 transition-colors">Video</a></li>
+      <li><a href="#letter"  class="nav-link hover:text-yellow-300 transition-colors">Letter</a></li>
+      <li><a href="#coupons" class="nav-link hover:text-yellow-300 transition-colors">Coupons</a></li>
     </ul>
     <button id="mobileMenuBtn" class="md:hidden text-xl thunder-text" aria-label="Menu">
       <i class="fas fa-bolt"></i>
     </button>
   </nav>
 
+  <!-- Mobile Menu -->
   <div id="mobileMenu" class="mobile-menu fixed inset-0 z-40 flex flex-col items-center justify-center gap-8"
        style="background:rgba(7,7,15,0.97);backdrop-filter:blur(16px)">
     <button id="mobileMenuClose" class="absolute top-6 right-6 text-xl thunder-text"><i class="fas fa-times"></i></button>
-    <a href="#hero"    class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Sanctuary</a>
-    <a href="#gallery" class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Chronicles</a>
-    <a href="#video"   class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Vignette</a>
-    <a href="#letter"  class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Epistle</a>
-    <a href="#coupons" class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Tokens</a>
+    <a href="#hero"    class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Home</a>
+    <a href="#gallery" class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Gallery</a>
+    <a href="#video"   class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Video</a>
+    <a href="#letter"  class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Letter</a>
+    <a href="#coupons" class="mobile-nav-link font-title text-2xl tracking-widest thunder-text">Coupons</a>
   </div>
 
-  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-4 pt-28 pb-16 z-10 overflow-hidden">
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 1 — HERO
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
+  <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-28 pb-16 z-10 overflow-hidden">
 
+    <!-- Kanji watermark -->
     <span class="kanji-bg select-none" style="top:50%;left:20%;transform:translate(-50%,-50%)"></span>
     
+    <!-- Subtle blobs (reuse from your CSS) -->
     <div class="blob blob-1" style="background:rgba(245,197,24,0.08)"></div>
     <div class="blob blob-2" style="background:rgba(155,28,28,0.08)"></div>
     <div class="blob blob-3" style="background:rgba(59,42,110,0.12)"></div>
 
-    <div class="flex items-center gap-6 mb-3 text-yellow-400 text-sm tracking-widest animate-fadein-up z-10">
-      <span>⚡</span><span>⚡</span><span>⚡</span>
-    </div>
-
-    <p class="font-jp text-sm tracking-[.35em] uppercase animate-fadein-up mb-2 thunder-text">
-      Today is your day, my dearest 
-    </p>
+    <!-- Badge -->
+    <h2 class="breathing-badge animate-fadein-up mb-6" style="animation-delay:.05s">
+     Thunder Breathing · First Form 
     
-    <h1 class="font-title text-4xl md:text-6xl lg:text-7xl thunder-text leading-tight animate-fadein-up mb-2 z-10" style="animation-delay:.15s">
-      <span id="heroName">Hanna Tamara ⚡</span>
+    </h2>
+    <div class="thunder-gif-wrapper">
+        <img src="assets/gif/zenitsu.gif" 
+        alt="Zenitsu Thunder Breathing" 
+        class="thunder-gif">
+    </div>
+        <div class="scroll-box max-w-xl mt-8 animate-fadein-up" style="animation-delay:.6s">
+      <p class="font-jp text-sm leading-relaxed" style="color:var(--smoke)">
+        "Even a coward can become a hero — if he fights for the one he loves."
+      </p>
+      <p class="text-xs mt-2 tracking-widest" style="color:var(--thunder);opacity:.7">— Agatsuma Zenitsu</p>
+    </div>
+         <p class="font-jp text-sm leading-relaxed mt-6 animate-fadein-up" style="color:var(--smoke);animation-delay:.7s"></p>
+    <!-- Sub heading -->
+         <p class="font-jp text-xl md:text-5xl tracking-[.3em] uppercase animate-fadein-up mb-3 thunder-text">
+            Today is your special day
+         </p>
+    <!-- Main title -->
+    <h1 class="font-title text-5xl md:text-7xl lg:text-8xl thunder-text leading-tight animate-fadein-up" style="animation-delay:.3s">
+      <span id="heroName">Happy Birthday ⚡</span>
     </h1>
 
-    <div class="katana-line my-4 animate-fadein-up" style="animation-delay:.25s"></div>
+    <!-- Katana line -->
+    <div class="katana-line my-5 animate-fadein-up" style="animation-delay:.4s"></div>
 
-    <div class="min-h-[2.5rem] mb-6 z-10 animate-fadein-up" style="animation-delay:.35s">
-      <p class="font-italic text-lg md:text-2xl italic" style="color:var(--thunder)">
+    <!-- Typewriter -->
+    <div class="mt-2 min-h-[3rem] animate-fadein-up" style="animation-delay:.5s">
+      <p class="font-italic text-xl md:text-3xl italic" style="color:var(--thunder)">
         <span id="typewriter"></span><span class="typewriter-cursor" style="color:var(--thunder)">|</span>
       </p>
     </div>
 
-    <div class="z-10 w-full max-w-xl bg-midnight-panel/40 backdrop-blur-md p-5 rounded-2xl border border-yellow-500/10 shadow-xl mb-10 animate-fadein-up" style="animation-delay:.45s">
-      <p id="countdownLabel" class="text-xs uppercase tracking-[.3em] mb-4 font-medium" style="color:var(--thunder)">
-        ⚡ The Infinity We Have Woven Together ⚡
+    <!-- Zenitsu quote box -->
+
+    <!-- Countdown -->
+    <div class="mt-10 animate-fadein-up" style="animation-delay:.75s">
+      <p id="countdownLabel" class="text-xs uppercase tracking-[.3em] mb-3 font-medium" style="color:var(--thunder)">
+        ⚡ Days Together ⚡
       </p>
-      
-      <div class="flex gap-3 md:gap-4 justify-center" id="countdownDisplay">
-        <div class="countdown-card py-2 px-4 rounded-xl min-w-[70px]" style="background:rgba(245,197,24,0.07); border:1px solid rgba(245,197,24,0.25)">
-          <span id="cdDays" class="block font-title text-2xl md:text-3xl thunder-text">000</span>
-          <span class="text-[10px] uppercase tracking-widest text-slate-400">Days</span>
+      <div class="flex gap-4 justify-center" id="countdownDisplay">
+        <div class="countdown-card" style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.25)">
+          <span id="cdDays"  class="countdown-num thunder-text">000</span>
+          <span class="countdown-lbl" style="color:var(--smoke)">Days</span>
         </div>
-        <div class="countdown-card py-2 px-4 rounded-xl min-w-[70px]" style="background:rgba(245,197,24,0.07); border:1px solid rgba(245,197,24,0.25)">
-          <span id="cdHours" class="block font-title text-2xl md:text-3xl thunder-text">00</span>
-          <span class="text-[10px] uppercase tracking-widest text-slate-400">Hours</span>
+        <div class="countdown-card" style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.25)">
+          <span id="cdHours" class="countdown-num thunder-text">00</span>
+          <span class="countdown-lbl" style="color:var(--smoke)">Hours</span>
         </div>
-        <div class="countdown-card py-2 px-4 rounded-xl min-w-[70px]" style="background:rgba(245,197,24,0.07); border:1px solid rgba(245,197,24,0.25)">
-          <span id="cdMins" class="block font-title text-2xl md:text-3xl thunder-text">00</span>
-          <span class="text-[10px] uppercase tracking-widest text-slate-400">Mins</span>
+        <div class="countdown-card" style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.25)">
+          <span id="cdMins"  class="countdown-num thunder-text">00</span>
+          <span class="countdown-lbl" style="color:var(--smoke)">Mins</span>
         </div>
-        <div class="countdown-card py-2 px-4 rounded-xl min-w-[70px]" style="background:rgba(245,197,24,0.07); border:1px solid rgba(245,197,24,0.25)">
-          <span id="cdSecs" class="block font-title text-2xl md:text-3xl text-yellow-400">00</span>
-          <span class="text-[10px] uppercase tracking-widest text-slate-400">Secs</span>
+        <div class="countdown-card" style="background:rgba(245,197,24,0.07);border:1px solid rgba(245,197,24,0.25)">
+          <span id="cdSecs"  class="countdown-num thunder-text">00</span>
+          <span class="countdown-lbl" style="color:var(--smoke)">Secs</span>
         </div>
       </div>
     </div>
 
-    <div class="z-10 flex flex-col items-center w-full max-w-xl animate-fadein-up px-2" style="animation-delay:.6s">
-      
-      <div class="breathing-badge mb-5 text-center">
-        Thunder Breathing · First Form · Hekireki Issen (火雷神)
-      </div>
-
-      <div class="w-130 h-130 mb-5 overflow-hidden rounded-xl border border-yellow-500/100 shadow-lg shadow-yellow-500/70 bg-black/20 flex items-center justify-center">
-        <img src="assets/gif/zenitsu.gif" alt="Zenitsu Thunder Breathing" class="w-full h-full object-cover">
-      </div>
-
-      <div class="scroll-box w-full bg-black/20 p-5 rounded-xl border border-white/5 backdrop-blur-sm">
-        <p class="font-jp text-sm leading-relaxed text-justify" style="color:var(--smoke)">
-          "Perchance, the greatest strength of a mortal is not forged within a turbulent mind. It awakens softly from the scars we gracefully endure, and the unyielding Now to defend the one who holds our heart."
-        </p>
-        <p class="text-xs mt-3 tracking-widest text-right" style="color:var(--thunder); opacity:.7">— Agatsuma Zenitsu</p>
-      </div>
-
-    </div>
-
-    <a href="#gallery" class="scroll-indicator mt-12 animate-fadein-up thunder-text" style="animation-delay:.75s" aria-label="Scroll down">
+    <!-- Scroll indicator -->
+    <a href="#gallery" class="scroll-indicator mt-14 animate-fadein-up thunder-text" style="animation-delay:.9s" aria-label="Scroll down">
       <i class="fas fa-chevron-down"></i>
     </a>
   </section>
 
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 2 — GALLERY
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
   <section id="gallery" class="relative z-10 py-24 px-6" style="background:rgba(19,19,43,0.6)">
     <div class="max-w-6xl mx-auto">
       <div class="section-heading">
         <div class="bolt-divider">⚡ ⚡ ⚡</div>
-        <p class="section-sub font-title text-xs tracking-[.3em] uppercase">Our Visual Anthologies</p>
-        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">Ephemeral Instants Caught in Time 📸</h2>
+        <p class="section-sub font-title text-xs tracking-[.3em] uppercase">Our Memories</p>
+        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">A Thousand Moments 📸</h2>
         <div class="katana-line mt-4"></div>
       </div>
 
+      <!-- Slider wrapper -->
       <div class="gallery-slider-wrapper mt-12">
         <button class="slider-btn slider-prev" id="galleryPrev" aria-label="Previous"><i class="fas fa-chevron-left"></i></button>
         <div class="gallery-slider" id="gallerySlider">
@@ -312,7 +332,7 @@
           <div class="gallery-slide">
             <div class="gallery-card">
               <img src="assets/images/photo5.jpg" alt="Memory 5" loading="lazy" />
-              <div class="gallery-overlay"><p class="font-title text-yellow-300 text-xl tracking-wider">You, Me, and the Botanical Gardens 🌲</p></div>
+              <div class="gallery-overlay"><p class="font-title text-yellow-300 text-xl tracking-wider">Aku, Kamu, dan Kebun Raya🌲 </p></div>
             </div>
           </div>
           <div class="gallery-slide">
@@ -331,23 +351,28 @@
         <button class="slider-btn slider-next" id="galleryNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
       </div>
 
+      <!-- Dots -->
       <div class="flex justify-center gap-2 mt-6" id="galleryDots"></div>
     </div>
   </section>
 
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 3 — VIDEO
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
   <section id="video" class="relative z-10 py-24 px-6" style="background:rgba(7,7,15,0.8)">
     <div class="max-w-4xl mx-auto">
       <div class="section-heading">
         <div class="bolt-divider">⚡ ⚡ ⚡</div>
-        <p class="section-sub font-title text-xs tracking-[.3em] uppercase">A Brief Reverie</p>
-        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">Linger Here for a Moment 🎬</h2>
+        <p class="section-sub font-title text-xs tracking-[.3em] uppercase">A Message For You</p>
+        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">Watch This 🎬</h2>
         <div class="katana-line mt-4"></div>
       </div>
 
       <div class="video-container mt-12" style="border:1px solid rgba(245,197,24,0.2);border-radius:1rem;overflow:hidden;box-shadow:0 0 40px rgba(245,197,24,0.08)">
+        <!-- Replace VIDEO_ID with your unlisted YouTube video ID -->
         <iframe
           src="https://www.youtube.com/embed/VIDEO_ID?rel=0&modestbranding=1&color=white"
-          title="Birthday vignette"
+          title="Birthday video"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
@@ -356,18 +381,22 @@
     </div>
   </section>
 
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 4 — LETTER / ENVELOPE
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
   <section id="letter" class="relative z-10 py-24 px-6" style="background:rgba(19,19,43,0.5)">
     <div class="max-w-3xl mx-auto">
       <div class="section-heading">
         <div class="bolt-divider">⚡ ⚡ ⚡</div>
-        <p class="section-sub font-title text-xs tracking-[.3em] uppercase">The Sanctuary of Affection</p>
-        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">An Unveiled Epistle 💌</h2>
+        <p class="section-sub font-title text-xs tracking-[.3em] uppercase"></p>
+        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">A Little Letter For You 💌</h2>
         <div class="katana-line mt-4"></div>
       </div>
 
       <div class="mt-12 flex flex-col items-center">
 
-        <div class="envelope-wrapper" id="envelopeWrapper" role="button" tabindex="0" aria-label="Open the parchment">
+        <!-- Envelope (reuses your CSS class) -->
+        <div class="envelope-wrapper" id="envelopeWrapper" role="button" tabindex="0" aria-label="Open envelope to read letter">
           <div class="envelope" id="envelope">
             <div class="envelope-back"></div>
             <div class="envelope-flap" id="envelopeFlap"></div>
@@ -378,43 +407,40 @@
             </div>
           </div>
           <p class="mt-6 text-xs font-medium tracking-widest uppercase animate-pulse" style="color:var(--thunder)">
-            Touch to Unseal Now ⚡
+            Click to open ⚡
           </p>
         </div>
 
+        <!-- Letter reveal -->
         <div class="letter-reveal" id="letterReveal">
           <div class="letter-paper" id="letterPaper" style="background:#13132b;border:1px solid rgba(245,197,24,0.2);color:var(--smoke)">
 
             <div class="letter-decoration-top thunder-text">⚡ ⚡ ⚡</div>
 
-            <p class="font-title text-3xl md:text-4xl thunder-text mb-6">Unto My Fondest Desire,</p>
+            <p class="font-title text-3xl md:text-4xl thunder-text mb-6">My Dearest,</p>
 
             <div class="letter-body font-jp text-sm leading-loose" style="color:var(--smoke)">
-                <p>
-                  Much like Zenitsu, whose strength reveals itself most brightly in moments of fear and darkness, you carry a quiet kind of brilliance within you—one that shines even when you fail to notice it yourself. Every moment spent beside you arrives like a thunderclap: sudden, electric, and impossible to forget.
-                </p>
-
-                <p>
-                  On this special day, I simply want you to know that among all the countless things life has given me, meeting you remains one of the most precious. Your laughter feels like warmth after a storm, and your kindness has a way of making even the heaviest days feel lighter.
-                </p>
-
-                <p>
-                  Thank you for every memory we have created together—the chaotic adventures, the peaceful silences, the small conversations that somehow became unforgettable, and the quiet comfort of simply having you near.
-                </p>
-
-                <p>
-                  You do not need a Nichirin blade to become someone extraordinary. In more ways than you realise, you have already become a source of strength, calm, and light in my life.
-                </p>
-
-                <p>
-                  So on your birthday, I hope this new chapter brings you closer to every dream your heart quietly carries. And may the journey ahead of us continue to feel as breathtaking as the First Form:
-                  <span class="thunder-text font-semibold">Thunderclap and Flash (霹靂一閃) ⚡</span>
-                </p>
+              <p>
+                Like Zenitsu whose strength blazes brightest when it matters most — you are someone who shines even when you don't realise it. Every moment with you feels like a thunderclap: sudden, electric, and impossible to forget.
+              </p>
+              <p>
+                On this very special day, I want you to know that you are my favourite person in the whole world. Your laugh is like a flash of gold. Your kindness cuts through darkness the way lightning cuts through the night sky.
+              </p>
+              <p>
+                Thank you for every moment — the loud ones and the quiet ones, the adventures and the lazy days, the times you held my hand and the times you made me smile without even trying.
+              </p>
+              <p>
+                You don't need a demon-slayer sword to be a hero. You already are one — my hero, every single day.
+              </p>
+              <p>
+                Happy Birthday, my love. May this year bring you everything your heart desires — and may every day feel like a First Form: <span class="thunder-text font-semibold">Thunderclap and Flash ⚡</span>
+              </p>
             </div>
 
             <div class="text-right mt-8">
-              <p class="font-title text-2xl md:text-3xl thunder-text">Evermore Thine,</p>
-              <p class="font-title text-xl md:text-2xl mt-1" style="color:var(--smoke)">Your Faithful Sovereign ⚡💛</p>
+              <p class="font-title text-2xl md:text-3xl thunder-text">Forever Yours,</p>
+              <!-- ── Replace with your name ── -->
+              <p class="font-title text-xl md:text-2xl mt-1" style="color:var(--smoke)">Your Love ⚡💛</p>
             </div>
 
             <div class="letter-decoration-bottom thunder-text">⚡ ⚡ ⚡</div>
@@ -425,44 +451,47 @@
     </div>
   </section>
 
+  <!-- ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░
+       SECTION 5 — COUPONS
+  ░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░ -->
   <section id="coupons" class="relative z-10 py-24 px-6" style="background:rgba(7,7,15,0.9)">
     <div class="max-w-5xl mx-auto">
       <div class="section-heading">
         <div class="bolt-divider">⚡ ⚡ ⚡</div>
-        <p class="section-sub font-title text-xs tracking-[.3em] uppercase">Redeemable Across Eternity</p>
-        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">Tokens of Boundless Indulgence 🎁</h2>
+        <p class="section-sub font-title text-xs tracking-[.3em] uppercase">Redeemable Anytime</p>
+        <h2 class="section-title font-title thunder-text text-3xl md:text-5xl mt-2">Your Gift Vouchers 🎁</h2>
         <div class="katana-line mt-4"></div>
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-12" id="couponsGrid">
 
-        <div class="coupon-card" data-emoji="🍦" data-label="Glacial Confection"
+        <div class="coupon-card" data-emoji="🍦" data-label="Free Ice Cream"
              style="background:rgba(19,19,43,0.8);border:1px solid rgba(245,197,24,0.25)">
-          <div class="coupon-badge" style="background:var(--thunder);color:#0d0d1a">TOKEN</div>
+          <div class="coupon-badge" style="background:var(--thunder);color:#0d0d1a">VOUCHER</div>
           <div class="coupon-icon">🍦</div>
           <h3 class="coupon-title font-title thunder-text">Free Ice Cream</h3>
           <p class="coupon-desc font-jp text-xs" style="color:var(--smoke)">One scoop of your favourite flavour, anytime you want it!</p>
-          <button class="coupon-btn font-title tracking-widest">Claim Now ⚡</button>
+          <button class="coupon-btn font-title tracking-widest">Redeem ⚡</button>
           <div class="coupon-holes"><span></span><span></span></div>
         </div>
 
         <div class="coupon-card" data-emoji="🤗" data-label="Unlimited Hugs"
              style="background:rgba(19,19,43,0.8);border:1px solid rgba(245,197,24,0.25)">
-          <div class="coupon-badge" style="background:var(--thunder);color:#0d0d1a">TOKEN</div>
+          <div class="coupon-badge" style="background:var(--thunder);color:#0d0d1a">VOUCHER</div>
           <div class="coupon-icon">🤗</div>
           <h3 class="coupon-title font-title thunder-text">Unlimited Hugs</h3>
-          <p class="coupon-desc font-jp text-xs" style="color:var(--smoke)">Valid for as many hugs as you need, no expiry date</p>
-          <button class="coupon-btn font-title tracking-widest">Claim Now ⚡</button>
+          <p class="coupon-desc font-jp text-xs" style="color:var(--smoke)">Valid for as many hugs as you need, no expiry date.</p>
+          <button class="coupon-btn font-title tracking-widest">Redeem ⚡</button>
           <div class="coupon-holes"><span></span><span></span></div>
         </div>
 
-        <div class="coupon-card" data-emoji="🌅" data-label="Serendipitous Escapade"
+        <div class="coupon-card" data-emoji="🌅" data-label="Surprise Date"
              style="background:rgba(19,19,43,0.8);border:1px solid rgba(245,197,24,0.25)">
-          <div class="coupon-badge" style="background:var(--thunder);color:#0d0d1a">TOKEN</div>
+          <div class="coupon-badge" style="background:var(--thunder);color:#0d0d1a">VOUCHER</div>
           <div class="coupon-icon">🌅</div>
           <h3 class="coupon-title font-title thunder-text">Surprise Date</h3>
-          <p class="coupon-desc font-jp text-xs" style="color:var(--smoke)">I plan everything — just show up and enjoy the magic</p>
-          <button class="coupon-btn font-title tracking-widest">Claim Now ⚡</button>
+          <p class="coupon-desc font-jp text-xs" style="color:var(--smoke)">I plan everything — just show up and enjoy the magic.</p>
+          <button class="coupon-btn font-title tracking-widest">Redeem ⚡</button>
           <div class="coupon-holes"><span></span><span></span></div>
         </div>
 
@@ -470,11 +499,12 @@
     </div>
   </section>
 
+  <!-- ░░ FOOTER ░░ -->
   <footer class="relative z-10 py-12 text-center" style="background:rgba(7,7,15,1);border-top:1px solid rgba(245,197,24,0.15)">
     <div class="haori-stripe w-24 mx-auto mb-5 rounded-full" style="height:3px"></div>
-    <p class="font-title text-2xl md:text-3xl thunder-text mb-2">Concocted with Pure Devotion ⚡💛</p>
+    <p class="font-title text-2xl md:text-3xl thunder-text mb-2">Made with Love ⚡💛</p>
     <p class="text-xs tracking-[.3em] uppercase font-jp" style="color:var(--smoke);opacity:.6">
-      Hail the Dawn of Your Light, My Sovereign Spark ⚡
+      Happy Birthday my thunderclap ⚡
     </p>
     <div class="mt-6 flex justify-center gap-5 text-lg" style="color:var(--thunder)">
       <i class="fas fa-bolt animate-heartbeat"></i>
@@ -488,19 +518,23 @@
     </p>
   </footer>
 
+  <!-- Coupon redeemed modal -->
   <div id="couponModal" class="coupon-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
     <div class="coupon-modal-box" style="background:#13132b;border:1px solid rgba(245,197,24,0.3)">
       <div id="modalEmoji" class="text-6xl mb-4"></div>
       <h3 id="modalTitle" class="font-title text-3xl thunder-text mb-2"></h3>
-      <p class="font-jp text-sm mb-6" style="color:var(--smoke)">The covenant has been invoked! ⚡<br/>Present this cosmic seal unto me to manifest its reality.</p>
-      <button id="modalClose" class="coupon-btn font-title tracking-widest">Seal Now ⚡</button>
+      <p class="font-jp text-sm mb-6" style="color:var(--smoke)">Voucher redeemed! ⚡<br/>Present this to claim your reward.</p>
+      <button id="modalClose" class="coupon-btn font-title tracking-widest">Close ⚡</button>
     </div>
   </div>
 
+  <!-- ░░ BACKGROUND MUSIC ░░ -->
   <audio id="bgMusic" loop preload="auto">
+    <!-- Ganti filename sesuai nama file mp3 lo -->
     <source src="assets/music/bgm.mp3" type="audio/mpeg" />
   </audio>
 
+  <!-- Music toggle button -->
   <button id="musicBtn" aria-label="Toggle music"
     style="
       position: fixed;
@@ -550,6 +584,7 @@
         playPromise.then(() => {
           playPromise = null;
           if (pendingPause) {
+            // User minta pause saat masih loading — eksekusi sekarang
             audio.pause();
             playing = false;
             musicIcon.className = 'fas fa-volume-xmark';
@@ -569,6 +604,7 @@
 
     function safePause() {
       if (playPromise !== null) {
+        // Masih loading — tandai dulu, pause setelah promise resolve
         pendingPause = true;
       } else {
         audio.pause();
@@ -578,6 +614,7 @@
       }
     }
 
+    // Fallback: tunggu interaksi user kalau autoplay diblokir browser
     function onFirstInteract() {
       if (!playing && playPromise === null) safePlay();
       document.removeEventListener('click',      onFirstInteract);
@@ -589,8 +626,10 @@
     document.addEventListener('touchstart', onFirstInteract);
     document.addEventListener('keydown',    onFirstInteract);
 
+    // Coba autoplay langsung
     safePlay();
 
+    // Toggle button
     musicBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       document.removeEventListener('click',      onFirstInteract);
@@ -605,6 +644,7 @@
     });
   </script>
 
+  <!-- Your existing JS -->
   <script src="script.js"></script>
 </body>
 </html>
