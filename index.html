@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sayang! 🎉</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #ffeef2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #4a4a4a;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(255, 182, 193, 0.5);
+            text-align: center;
+            max-width: 450px;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid #ffb6c1;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            color: #ff5e7e;
+            margin-bottom: 10px;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background-color: #ff5e7e;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 94, 126, 0.3);
+            transition: 0.2s;
+        }
+        .btn:hover {
+            transform: scale(1.05);
+            background-color: #ff4166;
+        }
+        .surat-rahasia {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background: #fff0f3;
+            border-left: 5px solid #ff5e7e;
+            border-radius: 8px;
+            text-align: left;
+            font-style: italic;
+            animation: fadeIn 1s ease-in-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img class="profile-img" src="foto.jpg" alt="Foto Ayang">
+        
+        <h1>Happy Birthday, [Nama Cewe Lu]! 💖</h1>
+        
+        <p>Hari ini adalah hari yang spesial karena orang paling favorit aku di dunia ini lagi tambah umur. Makasih ya udah selalu jadi alasan aku buat senyum setiap hari! 🎂✨</p>
+        
+        <button class="btn" onclick="bukaSurat()">Klik di Sini Dong! 🎁</button>
+        
+        <div id="surat" class="surat-rahasia">
+            "Hai Sayang... Selamat ulang tahun ya! Di umur yang baru ini, aku doain semoga kamu selalu bahagia, sehat, dan semua cita-cita kamu tercapai. Aku beruntung banget bisa punya kamu di hidup aku. Tetep jadi kamu yang apa adanya ya. I love you so much! 💝"
+        </div>
+    </div>
+
+    <script>
+        function bukaSurat() {
+            var surat = document.getElementById("surat");
+            var tombol = document.querySelector(".btn");
+            
+            if (surat.style.display === "none" || surat.style.display === "") {
+                surat.style.display = "block";
+                tombol.innerHTML = "Tutup Surat 💌";
+                alert("Cieee ada surat rahasia nih buat kamu... Dibaca sampai habis ya!");
+            } else {
+                surat.style.display = "none";
+                tombol.innerHTML = "Klik di Sini Dong! 🎁";
+            }
+        }
+    </script>
+</body>
+</html>
