@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ── ✦ 1. HERO NAME ─────────────────────────────────────── */
   const heroNameEl = document.getElementById('heroName');
-  if (heroNameEl) heroNameEl.textContent = CONFIG.name + ' 💖';
+  if (heroNameEl) heroNameEl.textContent = CONFIG.name + ' 💖 ';
 
   /* ── ✦ 2. TYPEWRITER ────────────────────────────────────── */
   (() => {
@@ -141,7 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
     resize();
     window.addEventListener('resize', resize);
 
-    const EMOJIS  = ['❤️', '🩷', '💕', '💖', '✨', '🌸', '💗'];
+    const EMOJIS  = ['⚡', '🩷', '⚡', '💖', '✨', '🌸', '💗'];
     const COUNT   = window.innerWidth < 600 ? 18 : 30;
     const hearts  = [];
 
