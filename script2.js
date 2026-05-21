@@ -8,16 +8,16 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-  /* ── ✦ CONFIGURATION ────────────────────────────────────── */
+  /* ── ✦ CONFIGURATION (edit these!) ──────────────────────── */
   const CONFIG = {
-    name:            'Hanna Tamara',   
-    birthdayDate:    '2026-05-24',     // Birthdate (YYYY-MM-DD)
-    togetherSince:   '2023-06-14',     // Anniversary (YYYY-MM-DD)
-    countdownMode:   'together',       // Mode: 'together' (count up) or 'birthday' (count down)
+    name:            'Hanna Tamara',        // ← Your girlfriend's name
+    birthdayDate:    '2026-05-24',     // ← Her birthday  YYYY-MM-DD
+    togetherSince:   '2023-06-14',     // ← Your anniversary YYYY-MM-DD
+    countdownMode:   'together',       // 'birthday' or 'together'
     typewriterLines: [
-      `May this auspicious day blossom as radiant as your smile`,
-      `You are the beacon of my life, the spark in my heart, and the thunder to my soul`,
-      `I await with profound yearning for the endless horizons we shall traverse`,
+      `may this day be as amazing as you are!`,
+      `You are the light of my life, the spark in my heart, and the thunder to my soul`,
+      `Can't wait for all our adventures ahead!`,
     ],
   };
 
@@ -38,8 +38,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const TYPING_SPEED  = 65;
     const DELETE_SPEED  = 35;
-    const PAUSE_AFTER   = 22;  
-    const PAUSE_BEFORE  = 8;   
+    const PAUSE_AFTER   = 22;  // ticks to wait before deleting
+    const PAUSE_BEFORE  = 8;   // ticks to wait before typing next
 
     function tick() {
       const current = lines[lineIdx];
@@ -92,7 +92,8 @@ document.addEventListener('DOMContentLoaded', () => {
       const now = new Date();
 
       if (CONFIG.countdownMode === 'birthday') {
-        labelEl.textContent = '⚡ Towards the Dawn of Thy Presence 🎂';
+        /* Count down to NEXT birthday */
+        labelEl.textContent = 'Countdown to Her Birthday 🎂';
         let bday = new Date(CONFIG.birthdayDate);
         bday.setFullYear(now.getFullYear());
         if (bday < now) bday.setFullYear(now.getFullYear() + 1);
@@ -107,7 +108,8 @@ document.addEventListener('DOMContentLoaded', () => {
         secsEl.textContent  = pad(s);
 
       } else {
-        labelEl.textContent = '⚡ The Infinity We Have Woven Together ⚡';
+        /* Count up from anniversary */
+        labelEl.textContent = 'Days We\'ve Been Together 🥂';
         const since = new Date(CONFIG.togetherSince);
         const diff  = now - since;
         const d  = Math.floor(diff / 86400000);
@@ -196,6 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
       confetti({ ...defaults, angle: 120, origin: { x: 1, y: 0.65 } });
     }
 
+    // Initial burst
     confetti({
       particleCount: 140,
       spread: 100,
@@ -204,6 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
       startVelocity: 38,
     });
 
+    // Continuous light shower for 3 seconds
     const interval = setInterval(() => {
       launchLeft();
       launchRight();
@@ -211,6 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => clearInterval(interval), 3000);
   })();
 
+  /* Helper: burst confetti from element */
   function burstAt(el) {
     if (typeof confetti !== 'function') return;
     const rect = el.getBoundingClientRect();
@@ -239,6 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let   current   = 0;
     let   autoTimer = null;
 
+    /* Build dots */
     const dots = [];
     slides.forEach((_, i) => {
       const dot = document.createElement('button');
@@ -249,15 +255,22 @@ document.addEventListener('DOMContentLoaded', () => {
       dots.push(dot);
     });
 
+    function getVisibleCount() {
+      return window.innerWidth >= 1024 ? 3
+           : window.innerWidth >= 600  ? 2
+           : 1;
+    }
+
     function goTo(idx) {
       current = Math.max(0, Math.min(idx, total - 1));
-      const slideWidth = slides[0].offsetWidth + 24; 
+      const slideWidth = slides[0].offsetWidth + 24; // gap = 1.5rem = 24px
       slider.style.transform = `translateX(-${current * slideWidth}px)`;
       slider.style.transition = 'transform 0.5s cubic-bezier(0.4,0,0.2,1)';
 
       dots.forEach((d, i) => d.classList.toggle('active', i === current));
     }
 
+    /* Override slider overflow with transform approach */
     slider.style.display    = 'flex';
     slider.style.overflow   = 'visible';
     slider.style.transform  = 'translateX(0)';
@@ -272,6 +285,7 @@ document.addEventListener('DOMContentLoaded', () => {
       resetAuto();
     });
 
+    /* Touch / swipe */
     let touchStartX = 0;
     slider.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].clientX; }, { passive: true });
     slider.addEventListener('touchend',   e => {
@@ -282,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
+    /* Auto-play */
     function startAuto() { autoTimer = setInterval(() => goTo((current + 1) % total), 4000); }
     function resetAuto()  { clearInterval(autoTimer); startAuto(); }
     startAuto();
@@ -309,6 +324,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       setTimeout(() => {
         reveal.classList.add('open');
+        // Small confetti burst when letter appears
         if (typeof confetti === 'function') {
           confetti({
             particleCount: 50,
@@ -346,14 +362,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const emoji = card.dataset.emoji  || '🎁';
         const label = card.dataset.label  || 'Gift';
 
+        // Confetti burst
         burstAt(btn);
 
+        // Show modal
         modalEmoj.textContent  = emoji;
         modalTitle.textContent = label;
         modal.classList.add('open');
 
+        // Mark card as used (optional visual)
         card.classList.add('used');
-        btn.textContent = '✓ Vow Manifested';
+        btn.textContent = '✓ Redeemed';
       });
     });
 
@@ -385,6 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
   (() => {
     const sections = document.querySelectorAll('section');
 
+    /* Add .reveal class to direct children of sections */
     sections.forEach(sec => {
       const children = sec.querySelectorAll(
         '.section-heading, .gallery-slider-wrapper, .video-container, ' +
@@ -405,39 +425,39 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   })();
 
-  /* ── ✦ 11. COUPON STAGGERED ENTRANCE ────────────────────── */
-  (() => {
-    const cards = document.querySelectorAll('.coupon-card');
-    cards.forEach((card, i) => {
-      card.style.transitionDelay = `${i * 0.08}s`;
-    });
-  })();
+/* ── ✦ 11. COUPON STAGGERED ENTRANCE ────────────────────── */
+(() => {
+  const cards = document.querySelectorAll('.coupon-card');
+  cards.forEach((card, i) => {
+    card.style.transitionDelay = `${i * 0.08}s`;
+  });
+})();
 
-  /* ── ✦ 12. THUNDER GIF REVEAL ───────────────────────────── */
-  (() => {
-    const thunder = document.querySelector('.thunder-gif-wrapper');
-    if (!thunder) return;
+/* ── ✦ 12. THUNDER GIF REVEAL ─────────────────────────────────────────────────────── */
+(() => {
+  const thunder = document.querySelector('.thunder-gif-wrapper');
+  if (!thunder) return;
 
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          thunder.classList.add('show');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        thunder.classList.add('show');
 
-          if (typeof confetti === 'function') {
-            confetti({
-              particleCount: 80,
-              spread: 70,
-              origin: { y: 0.6 },
-              colors: ['#ffd700', '#fff8dc', '#ffe066'],
-            });
-          }
-
-          io.disconnect();
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ffd700', '#fff8dc', '#ffe066'],
+          });
         }
-      });
-    }, { threshold: 0.35 });
 
-    io.observe(thunder);
-  })();
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.35 });
+
+  io.observe(thunder);
+})();
 
 });
