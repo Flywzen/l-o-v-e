@@ -27,7 +27,7 @@ birthday-website/
 ### 1. `script.js` — Top of file, `CONFIG` object
 ```js
 const CONFIG = {
-  name:           'Syahira',       // ← Her name
+  name:           'Hanna Tamara',       // ← Her name
   birthdayDate:   '2025-11-12',    // ← Her birthday  YYYY-MM-DD
   togetherSince:  '2023-06-14',    // ← Your anniversary YYYY-MM-DD
   countdownMode:  'together',      // 'birthday' → countdown TO birthday

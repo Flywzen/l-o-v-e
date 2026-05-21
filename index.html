@@ -181,7 +181,7 @@
 
   <!-- ░░ NAV ░░ -->
   <nav class="fixed top-[4px] left-0 right-0 z-50 flex items-center justify-between px-6 py-4 nav-glass">
-    <span class="font-title text-sm tracking-widest thunder-text">⚡</span>
+    <span class="font-title text-sm tracking-widest thunder-text">made by your lover rafly</span>
     <ul class="hidden md:flex gap-8 text-xs font-medium tracking-widest uppercase" style="color:var(--smoke)">
       <li><a href="#hero"    class="nav-link hover:text-yellow-300 transition-colors">Home</a></li>
       <li><a href="#gallery" class="nav-link hover:text-yellow-300 transition-colors">Gallery</a></li>
@@ -211,24 +211,34 @@
   <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center px-6 pt-28 pb-16 z-10 overflow-hidden">
 
     <!-- Kanji watermark -->
-    <span class="kanji-bg select-none" style="top:50%;left:50%;transform:translate(-50%,-50%)">雷</span>
-
+    <span class="kanji-bg select-none" style="top:50%;left:20%;transform:translate(-50%,-50%)"></span>
+    
     <!-- Subtle blobs (reuse from your CSS) -->
     <div class="blob blob-1" style="background:rgba(245,197,24,0.08)"></div>
     <div class="blob blob-2" style="background:rgba(155,28,28,0.08)"></div>
     <div class="blob blob-3" style="background:rgba(59,42,110,0.12)"></div>
 
     <!-- Badge -->
-    <div class="breathing-badge animate-fadein-up mb-6" style="animation-delay:.05s">
-     Thunder Breathing · Seventh Form ·
-Honoikazuchi no Kami(火雷神)
+    <h2 class="breathing-badge animate-fadein-up mb-6" style="animation-delay:.05s">
+     Thunder Breathing · First Form 
+    
+    </h2>
+    <div class="thunder-gif-wrapper">
+        <img src="assets/gif/zenitsu.gif" 
+        alt="Zenitsu Thunder Breathing" 
+        class="thunder-gif">
     </div>
-
+        <div class="scroll-box max-w-xl mt-8 animate-fadein-up" style="animation-delay:.6s">
+      <p class="font-jp text-sm leading-relaxed" style="color:var(--smoke)">
+        "Even a coward can become a hero — if he fights for the one he loves."
+      </p>
+      <p class="text-xs mt-2 tracking-widest" style="color:var(--thunder);opacity:.7">— Agatsuma Zenitsu</p>
+    </div>
+         <p class="font-jp text-sm leading-relaxed mt-6 animate-fadein-up" style="color:var(--smoke);animation-delay:.7s"></p>
     <!-- Sub heading -->
-    <p class="font-jp text-sm tracking-[.35em] uppercase animate-fadein-up mb-3" style="color:var(--smoke);animation-delay:.15s">
-      Today is your special day
-    </p>
-
+         <p class="font-jp text-xl md:text-5xl tracking-[.3em] uppercase animate-fadein-up mb-3 thunder-text">
+            Today is your special day
+         </p>
     <!-- Main title -->
     <h1 class="font-title text-5xl md:text-7xl lg:text-8xl thunder-text leading-tight animate-fadein-up" style="animation-delay:.3s">
       <span id="heroName">Happy Birthday ⚡</span>
@@ -245,12 +255,6 @@ Honoikazuchi no Kami(火雷神)
     </div>
 
     <!-- Zenitsu quote box -->
-    <div class="scroll-box max-w-xl mt-8 animate-fadein-up" style="animation-delay:.6s">
-      <p class="font-jp text-sm leading-relaxed" style="color:var(--smoke)">
-        "Even a coward can become a hero — if he fights for the one he loves."
-      </p>
-      <p class="text-xs mt-2 tracking-widest" style="color:var(--thunder);opacity:.7">— Agatsuma Zenitsu</p>
-    </div>
 
     <!-- Countdown -->
     <div class="mt-10 animate-fadein-up" style="animation-delay:.75s">
@@ -330,7 +334,18 @@ Honoikazuchi no Kami(火雷神)
               <div class="gallery-overlay"><p class="font-title text-yellow-300 text-xl tracking-wider">You & Me ⚡💛</p></div>
             </div>
           </div>
-
+          <div class="gallery-slide">
+            <div class="gallery-card">
+              <img src="assets/images/photo6.jpg" alt="Memory 6" loading="lazy" />
+              <div class="gallery-overlay"><p class="font-title text-yellow-300 text-xl tracking-wider">Golden Days 🌟</p></div>
+            </div>
+          </div>
+          <div class="gallery-slide">
+            <div class="gallery-card">
+              <img src="assets/images/photo7.jpg" alt="Memory 7" loading="lazy" />
+              <div class="gallery-overlay"><p class="font-title text-yellow-300 text-xl tracking-wider">My Universe 💛⚡</p></div>
+            </div>
+          </div>
         </div>
         <button class="slider-btn slider-next" id="galleryNext" aria-label="Next"><i class="fas fa-chevron-right"></i></button>
       </div>
@@ -548,61 +563,82 @@ Honoikazuchi no Kami(火雷神)
     const audio     = document.getElementById('bgMusic');
     const musicBtn  = document.getElementById('musicBtn');
     const musicIcon = document.getElementById('musicIcon');
-    let   playing   = false;
 
-    function startMusic() {
+    let playing      = false;
+    let playPromise  = null;
+    let pendingPause = false;
+
+    function fadeIn() {
       audio.volume = 0;
-      audio.play().then(() => {
-        playing = true;
-        musicIcon.className = 'fas fa-music';
-        // Fade in
-        let vol = 0;
-        const fade = setInterval(() => {
-          vol = Math.min(vol + 0.02, 0.6);
-          audio.volume = vol;
-          if (vol >= 0.6) clearInterval(fade);
-        }, 80);
-      }).catch(() => {});
-    }
-
-    // Autoplay on first user interaction (browser policy)
-    function onFirstInteract() {
-      if (!playing) startMusic();
-      document.removeEventListener('click',     onFirstInteract);
-      document.removeEventListener('touchstart', onFirstInteract);
-      document.removeEventListener('keydown',   onFirstInteract);
-    }
-
-    // Try autoplay immediately; fallback to first interaction
-    audio.play().then(() => {
-      playing = true;
-      audio.volume = 0;
-      let vol = 0;
       const fade = setInterval(() => {
-        vol = Math.min(vol + 0.02, 0.6);
-        audio.volume = vol;
-        if (vol >= 0.6) clearInterval(fade);
+        audio.volume = Math.min(audio.volume + 0.02, 0.6);
+        if (audio.volume >= 0.6) clearInterval(fade);
       }, 80);
-    }).catch(() => {
-      // Browser blocked autoplay — wait for interaction
-      document.addEventListener('click',      onFirstInteract);
-      document.addEventListener('touchstart', onFirstInteract);
-      document.addEventListener('keydown',    onFirstInteract);
-    });
+    }
 
-    // Toggle button
-    musicBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      if (playing) {
+    function safePlay() {
+      pendingPause = false;
+      playPromise  = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.then(() => {
+          playPromise = null;
+          if (pendingPause) {
+            // User minta pause saat masih loading — eksekusi sekarang
+            audio.pause();
+            playing = false;
+            musicIcon.className = 'fas fa-volume-xmark';
+            musicBtn.style.opacity = '0.5';
+          } else {
+            playing = true;
+            musicIcon.className = 'fas fa-music';
+            musicBtn.style.opacity = '1';
+            fadeIn();
+          }
+        }).catch(() => {
+          playPromise = null;
+          playing = false;
+        });
+      }
+    }
+
+    function safePause() {
+      if (playPromise !== null) {
+        // Masih loading — tandai dulu, pause setelah promise resolve
+        pendingPause = true;
+      } else {
         audio.pause();
         playing = false;
         musicIcon.className = 'fas fa-volume-xmark';
         musicBtn.style.opacity = '0.5';
+      }
+    }
+
+    // Fallback: tunggu interaksi user kalau autoplay diblokir browser
+    function onFirstInteract() {
+      if (!playing && playPromise === null) safePlay();
+      document.removeEventListener('click',      onFirstInteract);
+      document.removeEventListener('touchstart', onFirstInteract);
+      document.removeEventListener('keydown',    onFirstInteract);
+    }
+
+    document.addEventListener('click',      onFirstInteract);
+    document.addEventListener('touchstart', onFirstInteract);
+    document.addEventListener('keydown',    onFirstInteract);
+
+    // Coba autoplay langsung
+    safePlay();
+
+    // Toggle button
+    musicBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      document.removeEventListener('click',      onFirstInteract);
+      document.removeEventListener('touchstart', onFirstInteract);
+      document.removeEventListener('keydown',    onFirstInteract);
+
+      if (playing) {
+        safePause();
       } else {
-        audio.play();
-        playing = true;
-        musicIcon.className = 'fas fa-music';
-        musicBtn.style.opacity = '1';
+        safePlay();
       }
     });
   </script>

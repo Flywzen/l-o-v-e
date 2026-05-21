@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
     togetherSince:   '2023-06-14',     // ← Your anniversary YYYY-MM-DD
     countdownMode:   'together',       // 'birthday' or 'together'
     typewriterLines: [
-      `Happy Birthday, Sayang! 🎉`,
+      `Happy Birthday, Sayang <3`,
       `You mean the world to me 💖`,
       `Today is all about YOU ✨`,
       `I love you more every day 🌹`,
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resize);
 
     const EMOJIS  = ['⚡', '🩷', '⚡', '💖', '✨', '🌸', '💗'];
-    const COUNT   = window.innerWidth < 600 ? 18 : 30;
+    const COUNT   = window.innerWidth < 600 ? 18 : 20;
     const hearts  = [];
 
     function rand(min, max) { return Math.random() * (max - min) + min; }
@@ -426,12 +426,40 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   })();
 
-  /* ── ✦ 11. COUPON STAGGERED ENTRANCE ────────────────────── */
-  (() => {
-    const cards = document.querySelectorAll('.coupon-card');
-    cards.forEach((card, i) => {
-      card.style.transitionDelay = `${i * 0.08}s`;
+/* ── ✦ 11. COUPON STAGGERED ENTRANCE ────────────────────── */
+(() => {
+  const cards = document.querySelectorAll('.coupon-card');
+  cards.forEach((card, i) => {
+    card.style.transitionDelay = `${i * 0.08}s`;
+  });
+})();
+
+/* ── ✦ 12. THUNDER GIF REVEAL ───────────────────────────── */
+/* ── ✦ 12. THUNDER GIF REVEAL ───────────────────────────── */
+(() => {
+  const thunder = document.querySelector('.thunder-gif-wrapper');
+  if (!thunder) return;
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        thunder.classList.add('show');
+
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 80,
+            spread: 70,
+            origin: { y: 0.6 },
+            colors: ['#ffd700', '#fff8dc', '#ffe066'],
+          });
+        }
+
+        io.disconnect();
+      }
     });
-  })();
+  }, { threshold: 0.35 });
+
+  io.observe(thunder);
+})();
 
 });
