@@ -287,17 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
   })();
 
   /* ── 13. BENTO GALLERY TILT ───────────────────────────── */
-  document.querySelectorAll('.bento-item').forEach(item => {
-    item.addEventListener('mousemove', e => {
-      const rect = item.getBoundingClientRect();
-      const cx = rect.left + rect.width / 2;
-      const cy = rect.top + rect.height / 2;
-      const rx = ((e.clientY - cy) / (rect.height / 2)) * 3;
-      const ry = (-(e.clientX - cx) / (rect.width / 2)) * 3;
-      item.style.transform = `perspective(800px) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.02)`;
-    });
-    item.addEventListener('mouseleave', () => { item.style.transform = ''; });
-  });
+
 
   /* ── 14. MAGNETIC BUTTONS ─────────────────────────────── */
   document.querySelectorAll('.magnetic-btn').forEach(btn => {
