@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const CONFIG = {
     name:          'Hanna Tamara',
     birthdayDate:  '2026-05-24',
-    togetherSince: '2023-06-14',
+    togetherSince: '2023-07-14',
     countdownMode: 'together',
     typewriterLines: [
       `May this auspicious day blossom as radiant as your smile`,
