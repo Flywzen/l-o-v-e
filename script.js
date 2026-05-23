@@ -256,7 +256,7 @@ document.addEventListener('DOMContentLoaded', () => {
         modalTitle.textContent = card.dataset.label || 'Gift';
         modal.classList.add('open');
         card.classList.add('used');
-        btn.textContent = '✓ Vow Manifested';
+        btn.textContent = '✓ Now Manifested';
       });
     });
     function closeModal() { modal.classList.remove('open'); }
